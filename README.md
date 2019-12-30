@@ -15,4 +15,4 @@ EX :
                 message: `Username : ${username} has been created!`,
                 type: "API Call",
                 level: "1"
-            })``
+})``

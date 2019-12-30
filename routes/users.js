@@ -1,16 +1,18 @@
 const UserValidator = require("../controllers/users");
 const Logger = require("../controllers/logger");
+const UserModel = require("../models/users");
+
 module.exports = (app) => {
     
-    app.get("/user/register", (req, res, next) => {
+    app.post("/user/register", async (req, res, next) => {
+        
         const logger = new Logger();
         const ip = req.ip
-        const {
+        let {
             username,
             password,
-            email
-        } = req.headers;
-        console.log(username, password, email)
+            email,
+        } = req.body.account;
 
         const newUser = new UserValidator({
             username: username,
@@ -21,13 +23,31 @@ module.exports = (app) => {
 
 
         if (!validateRegister.error) {
+            const hashedPassword = await newUser.hashPassword();
+            req.body.account.password = hashedPassword;
+            const user = new UserModel(req.body);
+            user.save((err, succ) => {
+                if(err) {
+                    logger.writeLog({
+                        ip : ip,
+                        route : req.route.path,
+                        message: `Cannot save : ${username} into the database!`,
+                        type: "API Call || POST",
+                        status : "FAILED",
+                        level: "3",
+                        writeType : "local" // TODO create database insert
+                    })
+                }
+            })
+
             logger.writeLog({
                 ip : ip,
-                route : '/user/register',
-                message: `Username : ${username} has been created!`,
-                type: "API Call",
+                route : req.route.path,
+                message: `Username : ${username} has been created under the ID : ${user._id}`,
+                type: "API Call || POST",
+                status : "SUCCESS",
                 level: "1",
-                writeType : "local" // database
+                writeType : "local" // TODO create database insert
             })
             res.sendStatus(200)
         } else {

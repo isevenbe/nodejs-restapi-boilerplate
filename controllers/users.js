@@ -4,13 +4,17 @@ class UserValidator {
         password,
         age,
         email,
-        phone
+        phone,
+        firstname,
+        lastname
     }) {
         this.username = username;
         this.password = password;
         this.age = age;
         this.email = email;
         this.phone = phone;
+        this.firstname = firstname;
+        this.lastname = lastname;
     };
 
     validateRegister() {
@@ -69,8 +73,10 @@ class UserValidator {
         }
     };
 
-    hashPassword() {
-        // Concat function for hashing password
+    async hashPassword() {
+        const bcrypt = require('bcrypt');
+        const hashedPassword = await bcrypt.hash(this.password, 10);
+        return hashedPassword;
     }
 }
 
