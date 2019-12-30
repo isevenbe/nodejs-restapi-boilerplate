@@ -1,4 +1,4 @@
-class User {
+class UserValidator {
     constructor({
         username,
         password,
@@ -70,10 +70,5 @@ class User {
     }
 }
 
-const isevenbe = new User({
-    username: "TEST",
-    password: "dsfsFDSfsdfsd!125",
-    email: "fle@ireachm.com"
-})
+module.exports = UserValidator;
 
-console.log(isevenbe.validateRegister())

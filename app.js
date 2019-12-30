@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 
-const User = require("./controllers/users")
+
+// Controllers
+const User = require("./controllers/users");
+
+//Routes
+require("./routes/users")(app);
 
 app.get('/', (req, res) => {
     res.send('hello world');
