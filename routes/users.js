@@ -1,8 +1,9 @@
 const UserValidator = require("../controllers/users");
 const Logger = require("../controllers/logger");
-const logger = new Logger();
 module.exports = (app) => {
+    
     app.get("/user/register", (req, res, next) => {
+        const logger = new Logger();
         const ip = req.ip
         const {
             username,
@@ -25,7 +26,8 @@ module.exports = (app) => {
                 route : '/user/register',
                 message: `Username : ${username} has been created!`,
                 type: "API Call",
-                level: "1"
+                level: "1",
+                writeType : "local" // database
             })
             res.sendStatus(200)
         } else {

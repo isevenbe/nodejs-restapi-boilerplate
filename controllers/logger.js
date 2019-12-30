@@ -13,11 +13,7 @@ class Logger {
                     fileDate : new Date().toISOString()
                 }];
                 fs.writeFile(`./logs/LOG_${fileName}.json`, JSON.stringify(initFile, null, 4), (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    };
-                    console.log("File has been created");
+                    if (err) throw err
                 });
             }
         } catch (err) {
@@ -35,7 +31,7 @@ class Logger {
             if(fs.existsSync(`./logs/LOG_${fileName}.json`)) {
                 fs.readFile(`./logs/LOG_${fileName}.json`, 'utf-8', function(err, data) {
                     if (err) throw err
-                    var arrayOfObjects = JSON.parse(data);
+                    let arrayOfObjects = JSON.parse(data);
                     arrayOfObjects.push(log['0']);
                     fs.writeFile(`./logs/LOG_${fileName}.json`, JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
                         if (err) throw err
@@ -45,7 +41,7 @@ class Logger {
                await this.createFile(fileName);
                await fs.readFile(`./logs/LOG_${fileName}.json`, 'utf-8', function(err, data) {
                 if (err) throw err
-                var arrayOfObjects = JSON.parse(data);
+                let arrayOfObjects = JSON.parse(data);
                 arrayOfObjects.push(log['0'])
                 fs.writeFile(`./logs/LOG_${fileName}.json`, JSON.stringify(arrayOfObjects), 'utf-8', function(err) {
                     if (err) throw err

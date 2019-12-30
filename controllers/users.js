@@ -11,7 +11,7 @@ class UserValidator {
         this.age = age;
         this.email = email;
         this.phone = phone;
-    }
+    };
 
     validateRegister() {
         if (!!this.isEmpty(this.username, this.password, this.email)) {
@@ -40,17 +40,17 @@ class UserValidator {
                 message: "One or multiple arguments are empty"
             }
         }
-    }
+    };
 
     validateStrongPassword() {
         let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         return strongRegex.test(this.password)
-    }
+    };
 
     validateEmail() {
         const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return emailRegex.test(String(this.email).toLowerCase());
-    }
+    };
 
     isEmpty() {
         let flag = 0;
@@ -67,6 +67,10 @@ class UserValidator {
         } else {
             return false;
         }
+    };
+
+    hashPassword() {
+        // Concat function for hashing password
     }
 }
 
