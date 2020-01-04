@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 class UserValidator {
     constructor({
         username,
@@ -74,9 +77,30 @@ class UserValidator {
     };
 
     async hashPassword() {
-        const bcrypt = require('bcrypt');
         const hashedPassword = await bcrypt.hash(this.password, 10);
         return hashedPassword;
+    }
+
+    async comparePassword(password) {
+        const comparePassword = await bcrypt.compare(this.password, password);
+        return comparePassword;
+    }
+
+    generateToken(userid) {
+        require('dotenv').config()
+        const token = jwt.sign({ id: userid }, process.env.SECRET_JWT, {
+            expiresIn: "7d" // expires in 24 hours
+        });
+
+        const creation = new Date();
+        const expire = new Date();
+        expire.setDate(creation.getDate() + 7);
+
+        return {
+            "access_token.expire" : expire,
+            "access_token.creation" : creation,
+            "access_token.token" : token
+        }
     }
 }
 

@@ -15,6 +15,15 @@ const Users = new Schema({
             type: String,
             required: true
         },
+        origin: {
+            type: String,
+            enum: ['mobile', 'web', 'postman']
+        }
+    },
+    access_token : {
+        expire : Date,
+        creation : Date,
+        token : String
     },
     informations: {
         firstname: String,

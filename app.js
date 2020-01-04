@@ -11,10 +11,10 @@ const User = require("./controllers/users");
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
     extended: false
-}))
+}));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //Routes
 require("./routes/users")(app);
@@ -30,5 +30,5 @@ require("./routes/users")(app);
     }
 })();
 app.listen(2525, () => {
-    console.log("Server is ON")
+    console.log("Server is ON");
 })
